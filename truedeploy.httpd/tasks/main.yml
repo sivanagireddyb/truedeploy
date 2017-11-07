@@ -1,0 +1,15 @@
+---
+
+- name: update system
+  yum: name=* state=present
+
+- name: install epel repository && update system
+  yum: name=epel-release state=present
+
+- name: install httpd
+  yum: name=httpd state=present update_cache=yes
+
+- name: start httpd
+  service: name=httpd state=started enabled=yes
+
+

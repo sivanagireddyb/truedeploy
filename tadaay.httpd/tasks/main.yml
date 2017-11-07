@@ -1,0 +1,25 @@
+---
+# tasks file for truedeploy.httpd1
+- name: copy default-site config file
+  template:
+    src: default-site.conf
+    dest: /etc/httpd/conf.d/default-site.conf
+
+- name: copy deflate config file
+  template:
+    src: deflate.conf
+    dest: /etc/httpd/conf.d/deflate.conf
+
+- name: copy expires config file
+  template:
+    src: expires.conf
+    dest: /etc/httpd/conf.d/expires.conf
+
+- name: copy httpd.conf config file
+  template:
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+
+- name: restart httpd
+  service: name=httpd state=restarted
+

@@ -1,0 +1,11 @@
+---
+# vars file for polyglot.nexus
+#nexus vars
+group_id: com.polyglot
+artifact_id: Polyglot
+nexus_repo: http://192.168.11.109:8081/nexus/content/repositories/tadaay/
+nexus_user: polyglot
+nexus_pass: default123
+tomcat_dest: /opt/tomcat/webapps/
+version: latest
+

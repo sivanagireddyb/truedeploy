@@ -1,0 +1,32 @@
+---
+# tasks file for polyglot.tomcat
+- name: update system
+  yum: name=* state=present
+
+- name: install epel repository && update system
+  yum: name=epel-release state=present
+
+- name: add group "tomcat"
+  group: name=tomcat
+
+- name: add user "tomcat"
+  user: name=tomcat group=tomcat home=/opt/tomcat createhome=no
+  become: yes
+
+- name: Change ownership of Tomcat installation
+  file: path=/opt/tomcat/ owner=tomcat group=tomcat  state=directory recurse=yes
+
+- name: Download Tomcat
+  include: download.yml
+
+
+- name: give read permissinons of conf to tomcat
+  file: path=/opt/tomcat/conf mode=0754
+
+
+- name: Start Tomcat
+  service: name=tomcat state=started enabled=yes
+
+
+
+

@@ -1,0 +1,8 @@
+---
+# tasks file for truedeploy.sudouser
+
+- name: creating sudo user
+  user:
+    name: "{{ user_name }}"
+    group: "{{ group_name }}"
+    password: "{{ sudo_pass }}"

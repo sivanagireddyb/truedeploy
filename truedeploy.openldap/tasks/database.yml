@@ -1,0 +1,42 @@
+---
+- name: copy sample db config file
+  command: cp DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+  args:
+    chdir: /usr/share/openldap-servers/
+    #dest: /var/lib/ldap/DB_CONFIG
+
+- name: change permissions to file
+  file:
+    path: /var/lib/ldap/ 
+    owner: ldap
+    group: ldap
+
+- name: add Ldadp schemas
+  command: "{{ item }}"
+  with_items:
+    - "ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif"
+    - "ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif"
+    - "ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif"
+  tags: skip
+
+- name: copy base.ldif file
+  template:
+    src: base.ldif
+    dest: /opt/
+    mode: 0755
+  tags: base
+
+- name: install pip
+  yum: name=python-pip state=present
+  tags: pip
+
+- name: intsalling pexpect module
+  pip: name=pexpect
+  tags: pip1
+
+- name: buid directory structure
+  expect:
+    command: "ldapadd -x -W -D 'cn=manager,dc={{ domain }},dc={{ suffix }}' -f /opt/base.ldif"
+    responses: 
+      (?i)enter ldap password: "{{ ldap_passwd }}"
+  tags: build 

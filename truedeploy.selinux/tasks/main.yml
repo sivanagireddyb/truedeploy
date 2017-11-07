@@ -1,0 +1,5 @@
+---
+# tasks file for truedeploy.jenkins
+- name: disable SElinux
+  selinux: state=disabled
+

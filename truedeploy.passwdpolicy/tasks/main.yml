@@ -1,0 +1,22 @@
+---
+# tasks file for truedeploy.passwdpolicy
+- name: insert password policies into config file
+  blockinfile:
+    path: /etc/security/pwquality.conf
+    block: |
+      minlen = 8 
+      ucredit = -1
+      lcredit = -1 
+      dcredit = -1 
+      ocredit = -1 
+      minclass = 2 
+      
+
+- name: insert password policies into pam config file
+  blockinfile:
+    path: /etc/pam.d/system-auth
+    block: |
+      Force Capital Characters In Passwords - ucredit=-1
+      Force Lower Case Characters In Passwords - lcredit=-1
+      Force Numbers In Passwords - dcredit=-1
+      Force The Use Of Symbols In Passwords - ocredit=-1

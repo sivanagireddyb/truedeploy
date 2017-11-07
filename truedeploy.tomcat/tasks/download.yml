@@ -1,0 +1,9 @@
+---
+
+- name: download tomcat version
+  get_url: url=http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.0.47/bin/apache-tomcat-8.0.47.tar.gz dest=/opt/
+
+- name: extract tar file
+  unarchive: src=/opt/apache-tomcat-8.0.47.tar.gz extra_opts="--strip-components=1" dest=/opt/tomcat remote_src=yes group=tomcat owner=tomcat
+
+

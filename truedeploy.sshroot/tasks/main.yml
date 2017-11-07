@@ -1,0 +1,10 @@
+---
+# tasks file for truedeploy.sshroot
+- name: Disallow root SSH access
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp="^PermitRootLogin"
+              line="PermitRootLogin no"
+              state=present
+
+- name: restart sshd
+  service: name=sshd state=restarted

@@ -1,0 +1,5 @@
+---
+# vars file for truedeploy.fail2ban
+fail2ban_bantime: "600"
+fail2ban_maxtry: "4"
+fail2ban_findtime: "600"

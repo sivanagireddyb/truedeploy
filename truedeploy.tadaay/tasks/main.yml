@@ -1,0 +1,13 @@
+---
+# tasks file for truedeploy.tadaay
+
+- name: importing tadaay project tomcat role
+  include_role: name=tadaay.tomcat
+
+
+- name: importing tadaay project mariadb role
+  include_role: name=tadaay.mariadb
+
+
+- name: importing tadaay project httpd role
+  include_role: name=tadaay.httpd

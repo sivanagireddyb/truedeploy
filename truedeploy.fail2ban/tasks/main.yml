@@ -1,0 +1,42 @@
+---
+# tasks file for truedeploy.fail2ban
+- name: install epel-release packages
+  yum: name=epel-release state=present
+
+- name: install fail2ban packages
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+     - fail2ban
+     - fail2ban-systemd
+
+- name: configure fail2ban local jails
+  template:
+     src: 'jail.local.j2'
+     dest: /etc/fail2ban/jail.local 
+     owner: root
+     group: root
+     mode: 0755
+  tags: configuration
+
+- name: configure fail2ban local jails
+  template:
+     src: 'sshd.local'
+     dest: /etc/fail2ban/jail.d/sshd.local
+     owner: root
+     group: root
+     mode: 0755
+
+
+- name: start fail2ban
+  service: name=fail2ban state=started 
+
+- name: enable fail2ban
+  service: name=fail2ban enabled=yes
+
+- name: restart fail2ban
+  service: name=fail2ban state=restarted
+
+
+
+
+

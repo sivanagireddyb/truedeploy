@@ -1,0 +1,13 @@
+---
+#- name: downloading and deploying artifacts from nexus
+#  maven_artifact: group_id={{ group_id }} artifact_id={{ artifact_id }} repository_url={{ nexus_repo }} username={{ nexus_user }} password={{ nexus_pass }} dest={{ tomcat_dest }} version={{ version }} extension=war
+
+- name: stop tomcat
+  service: name=tomcat state=stopped
+
+- name: downloading and deploying from nexus
+  maven_artifact: group_id=com.polyglot artifact_id=Tadaay repository_url=http://192.168.11.24:8081/nexus/content/repositories/tadaa_qa/ username=polyglot password=default123 dest=/opt/tomcat/webapps/ROOT.war version=latest extension=war
+
+- name: restart tomcat
+  service: name=tomcat state=restarted
+

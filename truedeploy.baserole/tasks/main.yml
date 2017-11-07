@@ -1,0 +1,17 @@
+---
+# tasks file for truedeploy.baserole
+
+- name: importing ntp role
+  import_role: name=truedeploy.ntp
+
+- name: importing selinus role
+  import_role: name=truedeploy.selinux
+
+- name: importing passwordpolicy role
+  import_role: name=truedeploy.passwdpolicy
+
+- name: importing fail2ban role
+  import_role: name=truedeploy.fail2ban
+
+#- name: importing sshroot
+#  import_role: name=truedeploy.sshroot
