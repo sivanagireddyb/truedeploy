@@ -6,7 +6,7 @@
   service: name=tomcat state=stopped
 
 - name: downloading and deploying from nexus
-  maven_artifact: group_id=com.polyglot artifact_id=Tadaay repository_url=http://192.168.11.24:8081/nexus/content/repositories/tadaa_qa/ username=polyglot password=default123 dest=/opt/tomcat/webapps/ROOT.war version=latest extension=war
+  maven_artifact: group_id=com.company artifact_id=newprojrct repository_url=http:{{ repo_url }} username=user password=xxxxxxx dest=/your/dest/dir version=latest extension=war
 
 - name: restart tomcat
   service: name=tomcat state=restarted
