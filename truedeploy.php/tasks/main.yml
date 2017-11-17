@@ -1,0 +1,5 @@
+---
+# tasks file for truedeploy.php
+
+- name: install php
+  yum: name=php state=present update_cache=yes

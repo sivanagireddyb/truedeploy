@@ -1,0 +1,13 @@
+---
+# tasks file for truedeploy.ntp
+- name: insatlling ntp 
+  yum: name=ntp state=present update_cache=yes
+
+- name: updating ntp.conf file
+  template: src=ntp.conf dest=/etc/ntp.conf 
+ 
+- name: start and enable ntpd
+  service: name=ntpd state=started enabled=yes
+
+- name: start and enable ntpd
+  service: name=ntpd state=restarted

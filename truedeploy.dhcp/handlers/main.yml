@@ -1,0 +1,9 @@
+---
+# handlers file for truedeploy.dhcp
+
+- name: restart dhcp
+  service:
+    name: "{{ dhcp_service }}"
+    state: restarted
+
+

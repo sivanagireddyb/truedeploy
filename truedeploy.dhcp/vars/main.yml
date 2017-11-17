@@ -1,0 +1,25 @@
+---
+# vars file for truedeploy.dhcp
+dhcp_packages:
+  - dhcp
+
+dhcp_config_dir: /etc/dhcp
+
+dhcp_config: /etc/dhcp/dhcpd.conf
+
+dhcp_service: dhcpd
+
+#dhcpd.conf config file vars
+
+domain_name: truedeploy.org
+domain_name_server: 8.8.8.8
+sub_net: 192.168.2.0
+net_mask: 255.255.255.0
+interface: enp0s8
+range_from: 192.168.2.130
+range_to: 192.168.2.140
+gate_way: 192.168.2.1
+client_broadcast_address: 192.168.2.254
+
+mac_address:
+fixed_address_for_client:

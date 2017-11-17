@@ -1,0 +1,123 @@
+---
+# tasks file for truedeploy.openldap
+
+- name: install epel-release pkgs
+  yum: name=epel-release state=present
+  tags: epel
+
+- name: set hostname
+  hostname: name=truedeploy.com
+
+- name: set hosts
+  template:
+    src: hosts 
+    dest: /etc/hosts
+  
+- name: Install the openldap and required Packages
+  yum: name={{ item }} state=installed
+  with_items: 
+    - openldap
+    - openldap-servers
+    - compat-openldap
+    - openldap-servers-sql
+    - openldap-devel
+    - migrationtools
+    - openldap-clients
+
+- name: start ldap service
+  service: name=slapd state=started
+
+- name: enable service
+  service: name=slapd enabled=yes
+
+- name: Generating administator password
+  command: slappasswd -s {{ ldap_passwd }}
+  register: ldap_pass_register
+  tags: ldap
+
+- name: changing default ldap.conf file
+  blockinfile: 
+    path: /etc/openldap/ldap.conf
+    block: |
+      BASE    dc={{ domain }},dc={{ suffix }}
+      URI     ldap://{{ ip_addr }} 
+       
+- name: restart ldap
+  service: name=slapd state=restarted
+
+- name: creating db.ldif & monitor.ldif files
+  template:
+    src: "{{ item }}"
+    dest: /opt/
+    mode: 0755
+    force: yes 
+  with_items:
+    - "db.ldif"
+    - "monitor.ldif"
+  tags: create
+
+- name: sending db.ldif file to ldap server
+  command: "ldapmodify -Y EXTERNAL  -H ldapi:/// -f /opt/db.ldif"
+  tags: db.ldif
+
+
+- name: sending monitor.ldif to ldap server
+  command: 'ldapmodify -Y EXTERNAL  -H ldapi:/// -f /opt/monitor.ldif'
+  tags: monitor.ldif
+
+- name: copying generated ldap certificate to certs
+  template:
+    src: "{{ item }}"
+    dest: /etc/openldap/certs/
+  with_items:
+    - "truedeployldapkey.pem"
+    - "truedeployldapcert.pem"
+  tags: ldapcert
+
+- name: copying generated ldap certificate to certs
+  template:
+    src: truedeployldapcert.pem
+    dest: /etc/openldap/certs/
+  tags: ldapcert1
+
+
+- name: changing permissions owner and group
+  file:
+    path: /etc/openldap/certs/{{ item }}
+    owner: ldap
+    group: ldap
+  with_items:
+    - truedeployldapkey.pem
+    - truedeployldapcert.pem
+  tags: mod
+  
+- name: copying certs.ldif file
+  template:
+    src: certs.ldif
+    dest: /opt/
+    mode: 0755
+  tags: certs
+
+- name: import certs.ldif configuration to ldap server 
+  command: 'ldapmodify -Y EXTERNAL  -H ldapi:/// -f /opt/certs.ldif'
+  tags: certs1
+
+- name: start ldap service
+  service: name=slapd state=restarted
+
+
+- name: setting up ldap db by including database.yml
+  include: database.yml
+  tags: db
+
+- name: create objects in oenldap
+  include: baseobjects.yml
+  tags: objects
+
+- name: creating user
+  include: users.yml
+  tags: user
+
+- name: migrating tools
+  include: migratetools.yml
+  tags: migrate

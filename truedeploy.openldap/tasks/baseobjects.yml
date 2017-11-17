@@ -1,0 +1,8 @@
+---
+- name: changing config file of migrationtools
+  template:
+    src: migrate_common.ph
+    dest: /usr/share/migrationtools/migrate_common.ph
+    mode: 0644
+    force: yes
+    

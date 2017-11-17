@@ -1,0 +1,9 @@
+---
+# tasks file for truedeploy.tomcat1
+- name: copying  Tomcat init script to start tomcat as service
+  template: src=tomcat-initscript.sh dest=/etc/systemd/system/tomcat.service mode=0777
+
+- name: restart Tomcat
+  service: name=tomcat state=restarted
+
+

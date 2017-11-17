@@ -1,0 +1,10 @@
+
+- name: downloading repo for RedHat
+  get_url: 
+     url: http://pkg.jenkins-ci.org/redhat/jenkins.repo
+     dest: /etc/yum.repos.d/jenkins.repo
+
+- name: importing key
+  rpm_key:
+     state: present
+     key: https://jenkins-ci.org/redhat/jenkins-ci.org.key 

@@ -1,0 +1,8 @@
+[sshd]
+enabled=true
+port=ssh
+#action=firewallcmd-ipset
+logpath=%(sshd_log)s
+maxretry={{ fail2ban_maxtry }}
+bantime={{ fail2ban_bantime }}
+findtime={{ fail2ban_findtime }}

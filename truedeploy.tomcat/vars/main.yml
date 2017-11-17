@@ -1,0 +1,6 @@
+---
+# vars file for polyglot.tomcat
+http_port: 8080
+
+
+

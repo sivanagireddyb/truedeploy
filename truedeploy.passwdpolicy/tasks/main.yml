@@ -1,0 +1,15 @@
+---
+# tasks file for truedeploy.passwdpolicy
+- name: insert password policies into config file
+  blockinfile:
+    path: /etc/security/pwquality.conf
+    block: |
+      minlen = 8 
+      ucredit = -1
+      lcredit = -1 
+      dcredit = -1 
+      ocredit = -1 
+      minclass = 2 
+      
+- name: copy pam.d config file
+  template: src=system-auth  dest=/etc/pam.d/system-auth mode=0755 force=yes

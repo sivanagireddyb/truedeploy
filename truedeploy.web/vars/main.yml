@@ -1,0 +1,4 @@
+---
+# vars file for truedeploy.web
+ip_addr:
+app_env:

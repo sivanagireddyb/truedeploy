@@ -1,0 +1,19 @@
+---
+# tasks file for truedeploy.ldapclient
+
+- name: installing packages
+  yum: name={{ item }} update_cache=yes state=present
+  with_items:
+    - openldap-clients 
+    - nss-pam-ldapd
+
+- name: excecute command to connect to server
+  command: authconfig --enableldap --enableldapauth --ldapserver="{{ host_name }}" --ldapbasedn="dc={{ domain }},dc={{ suffix }}" --update
+
+- name: copying .pem files to cacerts
+  template:
+    src: truedeployldapcert.pem
+    dest: /etc/openldap/cacerts/
+
+- name: excecute command to connect to server
+  command: authconfig --enableldaptls --update

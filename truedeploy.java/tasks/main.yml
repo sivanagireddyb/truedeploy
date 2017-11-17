@@ -1,0 +1,27 @@
+---
+
+- name: update system
+  yum: name=* state=present
+
+- name: install epel repository && update system
+  yum: name=epel-release state=present
+
+- name: download java
+  get_url:
+      headers: "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"
+      url: 'http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.tar.gz'
+      dest: /opt/
+      mode: 0655
+
+- name: extract tar file
+  unarchive: src=/opt/jdk-8u151-linux-x64.tar.gz dest=/opt/ remote_src=yes
+
+- name: exporting jre home by running script
+  template: src=java.sh  dest=/etc/profile.d/java.sh
+
+- name: running java.sh script
+  shell: source java.sh
+  args:
+      chdir: /etc/profile/
+  
+  

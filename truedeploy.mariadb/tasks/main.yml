@@ -1,0 +1,29 @@
+---
+
+- name: update system
+  yum: name=* state=present
+
+- name: install epel repository && update system
+  yum: name=epel-release state=present
+
+- name: install mariadb-server
+  yum: name={{ item }} state=present update_cache=yes
+  become: yes
+  with_items:
+     - mariadb-server
+     - python-pip
+     - MySQL-python
+
+- name: start  mariadb
+  service: name=mariadb state=started enabled=yes
+
+
+- name: restart mariadb
+  service: name=mariadb state=restarted
+
+- name: create a new data base
+  mysql_db: name={{ db_name }} state=present collation=utf8_unicode_ci
+
+- name: create db user and password
+  mysql_user: name={{ db_user }} password={{ db_password }} priv=*.*:ALL
+

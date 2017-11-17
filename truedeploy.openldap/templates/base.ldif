@@ -1,0 +1,17 @@
+dn: dc={{ domain }},dc={{ suffix }}
+dc: {{ domain }}
+objectClass: top
+objectClass: domain
+
+dn: cn=manager,dc={{ domain }},dc={{ suffix }}
+objectClass: organizationalRole
+cn: manager
+description: LDAP Manager
+
+dn: ou=People,dc={{ domain }},dc={{ suffix }}
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Group,dc={{ domain }},dc={{ suffix }}
+objectClass: organizationalUnit
+ou: Group

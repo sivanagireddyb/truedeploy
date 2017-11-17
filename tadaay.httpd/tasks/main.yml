@@ -1,0 +1,41 @@
+---
+# tasks file for truedeploy.httpd1
+- name: copy default-site config file
+  template:
+    src: default-site.conf
+    dest: /etc/httpd/conf.d/default-site.conf
+  when: inventory_hostname in groups['tadaay_staging']
+  
+- name: creating db.ldif & monitor.ldif files
+  template:
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+    mode: 0755
+    force: yes
+
+- name: creating db.ldif & monitor.ldif files
+  template:
+    src: "{{ item }}"
+    dest: /etc/httpd/conf.d/
+    mode: 0755
+    force: yes 
+  with_items:
+    - "assets.tadaay.com.conf"
+    - "autoindex.conf"
+    - "ssl.conf"
+    - "manual.conf"
+    - "userdir.conf"
+    - "welcome.conf"
+  when: inventory_hostname in groups['tadaay_production']
+
+
+
+- name: copy defaulte-site file for prod
+  copy: src=default-site.conf dest=/etc/httpd/conf.d/ mode=0755
+  when: inventory_hostname in groups['tadaay_production']
+
+
+
+- name: restart httpd
+  service: name=httpd state=restarted
+

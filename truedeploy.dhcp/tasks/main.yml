@@ -1,0 +1,27 @@
+---
+# tasks file for truedeploy.dhcp
+
+- name: Install packages
+  yum:
+    name: "{{ item }}"
+    state: "{{ dhcp_packages_state }}"
+    update_cache: yes
+  with_items: "{{ dhcp_packages }}"
+
+- name: copying dhcpd.conf configuration file
+  template: 
+    src: dhcpd.conf
+    dest: "{{ dhcp_config }}"
+    owner: root
+    group: root
+    mode: 0644
+    validate: 'dhcpd -t -cf %s'
+  notify: restart dhcp
+  tags: dhcp1
+
+- name: Ensure service is started
+  service:
+    name: "{{ dhcp_service }}"
+    state: started
+    enabled: true
+  tags: dhcp2

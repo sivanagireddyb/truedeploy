@@ -1,0 +1,21 @@
+---
+
+
+- name: installing java
+  yum: name=java state=present update_cache=yes
+
+- include: download.yml
+  when: ansible_os_family == "RedHat"
+
+- name: disable selinux
+  selinux:
+    state: disabled
+
+- name: install jenkins
+  yum: name=jenkins state=present
+
+
+- name: retart jenkins
+  service:
+    name: jenkins
+    state: restarted

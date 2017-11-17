@@ -1,0 +1,67 @@
+---
+- name: install packages 
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+    - unzip
+    - net-tools
+    - sysstat
+    - openssh-clients
+    - perl-core
+    - libaio
+    - nmap-ncat 
+    - libstdc++.so.6
+
+#- name: set hostname
+#  command: hostname mail
+
+- name: set hosts file
+  template:
+    src=hosts.j2
+    dest=/etc/hosts
+    owner=root
+    mode=0644
+          
+- name: download zimbra
+  get_url: 
+    url=https://files.zimbra.com/downloads/8.6.0_GA/{{ zimbra }}.tgz
+    dest=/opt/{{ zimbra }}.tgz
+
+- name: untar zimbra file
+  unarchive: src=/opt/{{ zimbra }}.tgz dest=/opt/ creates=/opt/zimbra remote_src=yes
+
+  
+- name: Create the folder to upload the scripts
+  file:
+    path: /opt/zcs
+    state: directory
+
+
+- name: Uploading installer configuration file
+  template:
+    src: 'zimbra_conf.j2'
+    dest: /opt/zcs/zimbra_conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: install zimbra software
+  shell: yes 'Y' | ./install.sh -s
+  args:
+    chdir: /opt/{{ zimbra }}/
+  register: command_result
+- debug:
+    var: command_result.stdout_lines
+
+
+#- name: un install perl module
+#  yum:  
+#    name: zimbra-dnscache-8.6.0_GA_1153.RHEL7_64-20141215151110.x86_64.rpm 
+#    state: absent
+  
+
+
+- name: Configuring Zimbra  services for use
+  command: ./zmsetup.pl -c /opt/zcs/zimbra_conf
+  args:
+    chdir: /opt/zimbra/libexec/
+

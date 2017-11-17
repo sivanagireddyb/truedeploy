@@ -1,0 +1,3 @@
+---
+# vars file for truedeploy.java
+jre_home: /opt/jdk1.8.0_151/jre

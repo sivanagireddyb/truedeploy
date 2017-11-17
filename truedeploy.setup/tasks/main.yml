@@ -1,0 +1,16 @@
+---
+# tasks file for truedeploy.setup
+
+- name: importing java role
+  import_role: name=truedeploy.java
+
+- name: including tomcat role
+  include_role: name=truedeploy.tomcat
+
+
+- name: including mariadb role
+  include_role: name=truedeploy.mariadb
+
+
+- name: including httpd role
+  include_role: name=truedeploy.httpd

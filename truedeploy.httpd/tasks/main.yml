@@ -1,0 +1,34 @@
+---
+
+- name: update system
+  yum: name=* state=present
+
+- name: install epel repository && update system
+  yum: name=epel-release state=present
+
+- name: install httpd
+  yum: name=httpd state=present update_cache=yes
+
+- name: creating db.ldif & monitor.ldif files
+  template:
+    src: "{{ item }}"
+    dest: /etc/httpd/conf.d/
+    mode: 0755
+    force: yes 
+  with_items:
+    - "deflate.conf"
+    - "expires.conf"
+  tags: create
+
+#- name: creating db.ldif & monitor.ldif files
+#  template:
+#    src: httpd.conf
+#    dest: /etc/httpd/conf/httpd.conf
+#    mode: 0755
+#    force: yes 
+
+
+- name: start httpd
+  service: name=httpd state=started enabled=yes
+
+

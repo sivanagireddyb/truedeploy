@@ -1,0 +1,19 @@
+---
+# tasks file for truedeploy.web
+- name: including httpd role
+  include_role: name=truedeploy.httpd
+
+- name: including php role
+  include_role: name=truedeploy.php
+
+
+- name: creating db.ldif & monitor.ldif files
+  template:
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+    mode: 0755
+    force: yes
+
+- name: copy default-site.conf file
+  template: src=defaulte-site.conf dest=/etc/httpd/conf.d/ mode=0755 force=yes
+

@@ -1,0 +1,7 @@
+---
+# vars file for truedeploy.mariadb
+
+#DB vars
+db_user: 
+db_password: 
+db_name: 

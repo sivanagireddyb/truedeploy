@@ -1,0 +1,4 @@
+---
+# vars file for truedeploy.httpd
+http_port: 
+ip_addr: 
