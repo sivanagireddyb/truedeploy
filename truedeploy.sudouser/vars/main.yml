@@ -2,4 +2,8 @@
 # vars file for truedeploy.sudouser
 user_name: 
 group_name: 
+<<<<<<< HEAD
 sudo_pass:
+=======
+sudo_pass: 
+>>>>>>> 72bcac1f473958f798c1ee1f0769937ad0ee431c
