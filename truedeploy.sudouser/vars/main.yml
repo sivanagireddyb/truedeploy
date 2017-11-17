@@ -1,5 +1,5 @@
 ---
 # vars file for truedeploy.sudouser
-user_name: truedeploy
-group_name: wheel
-sudo_pass: Kh@lee$1
+user_name: 
+group_name: 
+sudo_pass: 
