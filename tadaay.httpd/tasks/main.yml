@@ -4,6 +4,7 @@
   template:
     src: default-site.conf
     dest: /etc/httpd/conf.d/default-site.conf
+<<<<<<< HEAD
   when: inventory_hostname in groups['tadaay_staging']
   
 - name: creating db.ldif & monitor.ldif files
@@ -35,6 +36,23 @@
   when: inventory_hostname in groups['tadaay_production']
 
 
+=======
+
+- name: copy deflate config file
+  template:
+    src: deflate.conf
+    dest: /etc/httpd/conf.d/deflate.conf
+
+- name: copy expires config file
+  template:
+    src: expires.conf
+    dest: /etc/httpd/conf.d/expires.conf
+
+- name: copy httpd.conf config file
+  template:
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+>>>>>>> bc0b3871c1830b0b1678f781d5c420428e536a2c
 
 - name: restart httpd
   service: name=httpd state=restarted

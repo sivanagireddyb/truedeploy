@@ -1,3 +1,7 @@
 ---
+<<<<<<< HEAD
 # vars file for truedeploy.tomcat1
 app_env:
+=======
+# vars file for truedeploy.tomcat1
+>>>>>>> bc0b3871c1830b0b1678f781d5c420428e536a2c

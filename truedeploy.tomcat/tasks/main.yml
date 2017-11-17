@@ -24,6 +24,11 @@
   file: path=/opt/tomcat/conf mode=0754
 
 
+<<<<<<< HEAD
+=======
+- name: Start Tomcat
+  service: name=tomcat state=started enabled=yes
+>>>>>>> bc0b3871c1830b0b1678f781d5c420428e536a2c
 
 
 

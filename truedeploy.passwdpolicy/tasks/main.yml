@@ -11,5 +11,17 @@
       ocredit = -1 
       minclass = 2 
       
+<<<<<<< HEAD
 - name: copy pam.d config file
   template: src=system-auth  dest=/etc/pam.d/system-auth mode=0755 force=yes
+=======
+
+- name: insert password policies into pam config file
+  blockinfile:
+    path: /etc/pam.d/system-auth
+    block: |
+      Force Capital Characters In Passwords - ucredit=-1
+      Force Lower Case Characters In Passwords - lcredit=-1
+      Force Numbers In Passwords - dcredit=-1
+      Force The Use Of Symbols In Passwords - ocredit=-1
+>>>>>>> bc0b3871c1830b0b1678f781d5c420428e536a2c

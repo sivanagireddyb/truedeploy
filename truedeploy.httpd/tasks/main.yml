@@ -9,6 +9,7 @@
 - name: install httpd
   yum: name=httpd state=present update_cache=yes
 
+<<<<<<< HEAD
 - name: creating db.ldif & monitor.ldif files
   template:
     src: "{{ item }}"
@@ -28,6 +29,8 @@
 #    force: yes 
 
 
+=======
+>>>>>>> bc0b3871c1830b0b1678f781d5c420428e536a2c
 - name: start httpd
   service: name=httpd state=started enabled=yes
 

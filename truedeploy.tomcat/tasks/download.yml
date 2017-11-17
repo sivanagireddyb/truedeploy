@@ -3,6 +3,7 @@
 - name: download tomcat version
   get_url: url=http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.0.47/bin/apache-tomcat-8.0.47.tar.gz dest=/opt/
 
+<<<<<<< HEAD
 - name: chect is it already extracted or not
   stat:
     path: /opt/tomcat/webapps
@@ -25,4 +26,9 @@
     - "/opt/tomcat/webapps/manager"
     - "/opt/tomcat/webapps/host-manager"
   when: remove.changed
+=======
+- name: extract tar file
+  unarchive: src=/opt/apache-tomcat-8.0.47.tar.gz extra_opts="--strip-components=1" dest=/opt/tomcat remote_src=yes group=tomcat owner=tomcat
+
+>>>>>>> bc0b3871c1830b0b1678f781d5c420428e536a2c
 
